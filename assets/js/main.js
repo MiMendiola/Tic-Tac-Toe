@@ -1,18 +1,19 @@
 
-
+// Create the board of the game
 const board = [
     ['','',''],
     ['','',''],
     ['','',''],
 ];
 
-// 0 = user, 1 = pc
+// 0 = user, 1 = pc and create the variables to print the game
 let turn = 0;
 const boardContainer = document.querySelector('#board');
 const playerDiv = document.querySelector('#player');
 
 startGame();
 
+// We start the game randomly and depends on the turn player plays or pc plays
 function startGame(){
     renderBoard();
     turn = Math.random() <= 0.5 ? 0: 1;
@@ -26,7 +27,7 @@ function startGame(){
     };
 };
 
-
+// Drawing the board with cells and rows
 function renderBoard(){
     const html = board.map(row => {
         const cells = row.map(cell => {
@@ -39,10 +40,12 @@ function renderBoard(){
     boardContainer.innerHTML = html.join("");
 };
 
+// To know who plays
 function renderCurrentPlayer(){
     playerDiv.textContent = `${turn == 0 ? 'Player Turn': 'PC Turn'}`;
 };
 
+// On each cells we add an Event to click on it to draw the play of the player
 function playerPlays(){
     const cells = document.querySelectorAll('.cell');
 
@@ -73,6 +76,7 @@ function playerPlays(){
     });
 };
 
+// For the pc we check all the posible options it have to win, if there are no options then play on other box
 function pcPlays(){
     renderCurrentPlayer();
 
@@ -121,7 +125,7 @@ function pcPlays(){
     }, 1500);
 };
 
-// For check if the pc can win doing 3
+// For check if the pc can win doing 3, we check all the posibilities and all the solutions
 function checkIfWin(){
     // copy of our array board
     const arr = JSON.parse(JSON.stringify(board));
@@ -141,6 +145,7 @@ function checkIfWin(){
         };
     };
 
+    // Posibilities
     const p1 = arr[0][0];
     const p2 = arr[0][1];
     const p3 = arr[0][2];
@@ -151,6 +156,8 @@ function checkIfWin(){
     const p8 = arr[2][1];
     const p9 = arr[2][2];
 
+
+    // Solutions
     const s1 = [p1, p2, p3];
     const s2 = [p4, p5, p6];
     const s3 = [p7, p8, p9];
@@ -172,6 +179,7 @@ function checkIfWin(){
 
 function checkIfWinner(){
 
+    // Posibilities in the board
     const p1 = board[0][0];
     const p2 = board[0][1];
     const p3 = board[0][2];
@@ -182,7 +190,7 @@ function checkIfWinner(){
     const p8 = board[2][1];
     const p9 = board[2][2];
 
-    //All the options to win
+    //All the solutions to win
     const s1 = [p1, p2, p3];
     const s2 = [p4, p5, p6];
     const s3 = [p7, p8, p9];
@@ -219,6 +227,7 @@ function checkIfWinner(){
     }
 };
 
+// If no one wins
 function renderDraw(){
     playerDiv.textContent = 'DRAW';
 }
